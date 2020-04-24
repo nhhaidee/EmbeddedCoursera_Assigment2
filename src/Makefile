@@ -10,7 +10,6 @@
 #*****************************************************************************
 
 #------------------------------------------------------------------------------
-# <Put a Description Here>
 #
 # Use: make [TARGET] [PLATFORM-OVERRIDES]
 #
@@ -94,7 +93,7 @@ PREP = $(SOURCES:.c=.i)
 #Make for dependency files
 %.d: %.c
 	$(CC) -M $< $(CFLAGS) $(CPPFLAGS) -o $@
-
+#Make for dump files
 $(TARGET).asm : $(TARGET).out
 	$(OBJDUMP) -d $(TARGET).out >> $@
 
@@ -107,6 +106,7 @@ build: $(TARGET).out $(TARGET).asm
 
 $(TARGET).out: $(OBJS) $(DEPS)
 	$(CC) $(OBJS) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@
+	$(SIZE) -Atd $@
 	$(SIZE) $@
 
 .PHONY: Clean
